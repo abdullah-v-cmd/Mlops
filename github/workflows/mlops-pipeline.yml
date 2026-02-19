@@ -1,0 +1,36 @@
+name: Telco Churn MLOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-train:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.10
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Data Ingestion
+      run: python Src/data_ingestion.py
+
+    - name: Run Preprocessing
+      run: python Src/preprocessing.py
+
+    - name: Train Model
+      run: python Src/train.py
+
+    - name: Evaluate Model
+      run: python Src/evaluate.py
