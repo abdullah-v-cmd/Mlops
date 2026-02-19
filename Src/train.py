@@ -58,6 +58,8 @@ def train_model():
        # Save model
 model_path = os.path.join(MODEL_DIR, "model.pkl")
 joblib.dump(model, model_path)
+joblib.dump(X_train.columns.tolist(), feature_path)
+
 
 # Save training feature names
 features_path = os.path.join(MODEL_DIR, "features.pkl")
