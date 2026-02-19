@@ -46,17 +46,5 @@ def evaluate_model():
     print("✅ Evaluation completed")
     print(report)
 
-import json
-
-metrics = {
-    "accuracy": acc,
-    "precision": precision,
-    "recall": recall,
-    "f1_score": f1
-}
-
-with open("metrics.json", "w") as f:
-    json.dump(metrics, f)
-
 if __name__ == "__main__":
     evaluate_model()
