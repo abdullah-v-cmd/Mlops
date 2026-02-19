@@ -11,8 +11,8 @@ MODEL_DIR = "models"
 
 os.makedirs(MODEL_DIR, exist_ok=True)
 
-def train_model():
 
+def train_model():
     # load data
     X_train = pd.read_csv(f"{DATA_DIR}/X_train.csv")
     X_test = pd.read_csv(f"{DATA_DIR}/X_test.csv")
@@ -22,11 +22,15 @@ def train_model():
     y_train = y_train.values.ravel()
     y_test = y_test.values.ravel()
 
+    # Drop customerID
+    for df in [X_train, X_test]:
+        if "customerID" in df.columns:
+            df.drop(columns=["customerID"], inplace=True)
+
     # set MLflow experiment
     mlflow.set_experiment("Telco-Churn")
 
     with mlflow.start_run():
-
         model = RandomForestClassifier(n_estimators=100, random_state=42)
         model.fit(X_train, y_train)
 
@@ -55,8 +59,8 @@ def train_model():
         model_path = os.path.join(MODEL_DIR, "model.pkl")
         import joblib
         joblib.dump(model, model_path)
-
         print("✅ Model saved locally")
+
 
 if __name__ == "__main__":
     train_model()
