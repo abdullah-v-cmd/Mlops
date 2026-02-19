@@ -55,12 +55,15 @@ def train_model():
         print(f"Accuracy: {acc}")
         print(f"F1 Score: {f1}")
 
-        # save local copy
-        model_path = os.path.join(MODEL_DIR, "model.pkl")
-        import joblib
-        joblib.dump(model, model_path)
-        print("✅ Model saved locally")
+       # Save model
+model_path = os.path.join(MODEL_DIR, "model.pkl")
+joblib.dump(model, model_path)
 
+# Save training feature names
+features_path = os.path.join(MODEL_DIR, "features.pkl")
+joblib.dump(X_train.columns.tolist(), features_path)
+
+print("✅ Model and feature list saved")
 
 if __name__ == "__main__":
     train_model()
